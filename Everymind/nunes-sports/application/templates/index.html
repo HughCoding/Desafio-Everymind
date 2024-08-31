@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+    <style>
+      
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #1F5FBF;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        button.btn-delete {
+            background-color: #f44336; 
+            color: white; 
+            border: none; 
+            padding: 8px 12px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 14px;
+            transition: background-color 0.3s, transform 0.2s; 
+        }
+
+        button.btn-delete:hover {
+            background-color: #d32f2f; 
+            transform: scale(1.05); 
+        }
+
+        a {
+            display: block;
+            width: max-content;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #1F5FBF;
+            color: white;
+            text-align: center;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        a:hover {
+            background-color: #1F5FBF; 
+            transform: scale(1.05);
+        }
+        .no-products {
+            position: fixed; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); 
+            font-size: 18px;
+            color: #777;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Produtos</h1>
+    <a href="/add">Adicionar Produto</a>
+    
+    {% if not produtos %}
+        <div class="no-products">Não há produtos adicionados.</div>
+    {% else %}
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Código do Produto</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th>Ações</th>
+            </tr>
+            {% for produto in produtos %}
+            <tr>
+                <td>{{ produto.id }}</td>
+                <td>{{ produto.nome }}</td>
+                <td>{{ produto.codigo_produto }}</td>
+                <td>{{ produto.descricao }}</td>
+                <td>{{ produto.preco }}</td>
+                <td>
+                    <form action="{{ url_for('main.rota_deletar_produto', id=produto.id) }}" method="post" style="display:inline;">
+                        <button type="submit" class="btn-delete">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>
